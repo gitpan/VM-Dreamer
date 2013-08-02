@@ -3,6 +3,8 @@ package VM::Dreamer::Error;
 use strict;
 use warnings;
 
+our $VERSION = '0.087';
+
 use VM::Dreamer::Environment qw( get_restrictions get_say_normal );
 
 require Exporter;
@@ -32,9 +34,36 @@ sub invalid_term {
 
 =pod
 
+=head1 NAME
+
+VM::Dreamer::Error
+
+=head1 SYNOPSIS
+
+missing_term($term)
+invalid_term( $term, $value );
+
+=head1 DESCRIPTION
+
+Provides robust error messages to the user
+
+=head1 SUBROUTINES
+
+=head2 missing_term
+
+Takes a key which wasn't included in the machine definition and returns a string indicating this. Consumed by VM::Dreamer::Validate.
+
+=head2 invalid_term
+
+Used to return an error message when a definition term has a value which is outside the acceptable range. Takes the term (e.g. base, op_code_width or operand_width) and the offending value. Returns an error message saying what the offendng term was, what the boundaries are for the term adn what the actual value was.
+
 =head1 AUTHOR
 
-William Stevenson <dreamer at coders dot coop>
+William Stevenson <william at coders dot coop>
+
+=head1 SEE ALSO
+
+VM::Dreamer::Validate
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -3,6 +3,8 @@ package VM::Dreamer::Languages::Grasshopper;
 use strict;
 use warnings;
 
+our $VERSION = '0.087';
+
 use VM::Dreamer::Instructions qw( input_to_mb output_from_mb store load add subtract branch_always branch_if_zero branch_if_positive halt );
 
 require Exporter; 

@@ -3,6 +3,8 @@ package VM::Dreamer::IO;
 use strict;
 use warnings;
 
+our $VERSION = '0.087';
+
 use VM::Dreamer::Validate qw{ get_valid_input_regex };
 
 require Exporter;
@@ -114,9 +116,79 @@ sub shift_outbox_to_user {
 
 =pod
 
+=head1 NAME
+
+VM::Dreamer::IO - IO functionality for Dreamer
+
+=head1 SYNOPSIS
+
+    get_valid_input_from_user($machine)
+    add_input_to_inbox( $machine, $input )
+    shift_inbox_to_memory( $machine, $address )
+
+    add_to_outbox( $machine, $operand )
+    shift_outbox_to_user($machine)
+
+=head1 DESCRIPTION
+
+This module handles IO functions for Dreamer. This just means that it can:
+
+=over 12
+
+=item get input and validate it
+=item add the input to the Inbox stack
+=item shift the "oldest" entry in the inbox to an address in memory
+
+=item add an item in memory to the Outbox stack
+=item output the "oldest" entry in the outbox to the user
+
+=back
+
+=head1 SUBROUTINES
+
+=head2 get_valid_input_from_user
+
+Prompts the user for input. Valid input is returned otherwise the user is told what they did wrong and asked to try again. Raises an exception if max_tries is exceeded by the user.
+
+Note: The user doesn't need to zero-pad their input. They can do so if they like, but the input can't have more digits than the largest number they can enter.
+
+I.e. if the largest number they can enter is 999, 15 and 015 are acceptable, but 0015 would be rejected.
+
+=head2 add_input_to_inbox
+
+Pushes input to the "top" of the Inbox. 
+
+=head2 shift_inbox_to_memory
+
+Shifts the "bottom" of the inbox to an address in memory.
+
+=head2 add_to_outbox
+
+Adds the information stored at an address in memory to the "top" of the Outbox.
+
+=head2 shift_outbox_to_user
+
+Putputs the value at the "bottom" of the Outbox to the user. Note all output is zero-padded to have the same number of digits as the "width" of each address in memory.
+
+This means that if your memory is 8 digits wide and each digit can be between 0 and 7, the number 715 would be output as 00000715.
+
+This may change in a future release.
+
+=head1 CONSUMPTION
+
+Together, the first three methods are used to implement VM::Dreamer::Instructions::input_to_mb and the last two are used to implemtn VM::Dreamer::Instructions::output_from_mb. These in turn are the INP and OUT operations for Grasshopper.
+
+=head1 CAVEATS
+
+I've tried to follow the FIFO concept of First In, First Out; however, I don't know how well I understand the underlying concepts. If you know better and see any conceptual issues with the implementation, please let me know.
+
 =head1 AUTHOR
 
-William Stevenson <dreamer at coders dot coop>
+William Stevenson <william at coders dot coop>
+
+=head1 SEE ALSO
+
+VM::Dreamer::Instructions
 
 =head1 COPYRIGHT AND LICENSE
 

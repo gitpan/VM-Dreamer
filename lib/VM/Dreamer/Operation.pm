@@ -3,12 +3,14 @@ package VM::Dreamer::Operation;
 use strict;
 use warnings;
 
+our $VERSION = '0.087';
+
 use VM::Dreamer::Init qw( total_width greatest_digit greatest_number init_counter );
 
 require Exporter;
 
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw( get_new_machine add_one_to_counter input_to_mb output_from_mb store load add subtract branch_always branch_if_zero branch_if_positive halt );
+our @EXPORT_OK = qw( get_new_machine add_one_to_counter );
 
 sub get_new_machine {
     my ( $base, $op_code_width, $operand_width, $instruction_set ) = @_;
@@ -81,9 +83,45 @@ sub add_one_to_counter {
 
 =pod
 
+=head1 NAME
+
+VM::Dreamer::Operations - Help with the machine's operation 
+
+=head1 SYNOPSIS
+
+my $machine = get_new_machine( $base, $op_code_width, $operand_width, $instruction_set );
+add_one_to_counter( $counter, $greatest_digit );
+
+=head1 DESCRIPTION
+
+=head2 get_new_machine
+
+This function is called by VM::Dreamer::initialize_machine after it has validated the machine's definition.
+
+It sets the initial values for the machine's components as based on the machine's definition.
+
+It returns a reference to the newly initialized machine.
+
+=head2 add_one_to_counter
+
+Used by VM::Dreamer::increment_counter.
+
+Does just what it says - increments the counter by 1. It uses greatest_digit to know when to carry from one column to the next.
+
+For example, if the machine's greatest digit was 7 and the counter was set to 5473777, this function would return 5474000.
+
+Or, if the machine's greatest digit was 9 and the counter was set to 10259, this fuction would return 10260.
+
+It should be undefined what happens when the maximum value of the counter is passed to this function (but it just returns all zero's).
+
+=head1 SEE ALSO
+
+VM::Dreamer::initialize_machine
+VM::Dreamer::increment_counter
+
 =head1 AUTHOR
 
-William Stevenson <dreamer at coders dot coop>
+William Stevenson <william at coders dot coop>
 
 =head1 COPYRIGHT AND LICENSE
 

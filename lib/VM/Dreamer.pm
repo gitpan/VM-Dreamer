@@ -3,7 +3,7 @@ package VM::Dreamer;
 use strict;
 use warnings;
 
-our $VERSION = '0.085';
+our $VERSION = '0.087';
 
 use VM::Dreamer::Operation qw( add_one_to_counter get_new_machine );
 use VM::Dreamer::Util qw( parse_program_line parse_next_instruction );
@@ -108,31 +108,38 @@ sub execute_next_instruction {
 
 =head1 NAME
 
-Dreamer - A framework to emulate arbitrary one-operand computers
+Dreamer - An arbitrary emulator of one-operand computers 
 
 =head1 VERSION
 
-Version 0.01
+Version 0.087
 
 =head1 SYNOPSIS
 
-use VM::Dreamer qw{ initialize_machine load_program get_next_instruction increment_counter };
-use VM::Dreamer::Languages::MyComputer qw{ get_definition execute_next_instruction };
+use VM::Dreamer qw( initialize_machine load_program get_next_instruction increment_counter execute_next_instruction );
+use VM::Dreamer::Languages::Grasshopper qw( get_instruction_set );
 
-my $definition = get_definition();
-my $machine    = initialize_machine($definition);
+my $definition = {
+    base          => 10,
+    op_code_width => 1,
+    operand_width => 2
+};
 
-my $program = '/path/to/my/program'; 
+my $instruction_set = get_instruction_set();
+my $machine         = initialize_machine( $definition, $instruction_set );
 
+my $program = $ARGV[0];
 load_program( $machine, $program );
 
-until( $machine->halt ) {
+until( $machine->{halt} ) {
     get_next_instruction($machine);
     increment_counter($machine);
-    execute_instruction($machine);
+    execute_next_instruction($machine);
 }
 
-exit 0;
+=head1 DESCRIPTION
+
+Dreamer is a framework to emulate arbitrary 1-operand computers. It comes with pre-defined machines, but also lets you define and operate your own. It was written as a generalization of the Little Man Computer to help myself and others understand the foundations of Computer Science.
 
 =head1 EXPORT
 
@@ -146,17 +153,13 @@ execute_next_instruction
 
 =head2 initialize_machine
 
-Takes two hash_refs as input and returns a pointer to a machine. The first input is the machine's definition and the second is it's instruction set.
+Takes two hash_refs as input and returns a hash ref.
 
-Usually, the definition is received from get_definition and the instruction set is from VM::Dreamer::Languages::MyMachine::get_instruction_set
+The first input is the machine's definition. It should have  and the second is it's instruction set.
 
 =head2 load_program
 
 Takes a reference to your machine and a path to a program for your machine. If the file cannot be opened or is not valid, it raises an exception. Otherwise it puts the instructions into the corresponding addresses in your machine's memory and returns 0.
-
-=head1 DESCRIPTION
-
-Dreamer is a framework to emulate arbitrary 1-operand computers. It comes with pre-defined machines, but also lets you define and operate your own. It was written as a generalization of the Little Man Computer to help myself and others understand the foundations of Computer Science.
 
 =head1 GETTING STARTED 
 

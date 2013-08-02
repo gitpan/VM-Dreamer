@@ -3,6 +3,8 @@ package VM::Dreamer::Validate;
 use strict;
 use warnings;
 
+our $VERSION = '0.087';
+
 use VM::Dreamer::Environment qw( get_restrictions );
 use VM::Dreamer::Error qw( missing_term invalid_term );
 
@@ -76,7 +78,9 @@ sub get_valid_input_regex {
 
     return qr/^[0-$greatest_digit]{$instruction_width}$/;
 }
-
+# should be consistent on naming of functions - either call them get_valid
+# or build_valid, but not have one build_valid_line_regex and the other
+# get_valid_input_regex
 
 # sub validate_program_line {
 #     my $line = shift;
@@ -100,9 +104,69 @@ sub get_valid_input_regex {
 
 =pod
 
+=head1 NAME
+
+VM::Dreamer::Validate - Quality In / Quality Out
+
+=head1 SYNOPSIS
+
+validate_definition( $machine_definition );
+
+=head1 DESCRIPTION
+
+These functions help make sure that what comes in is what is expected.
+
+=head2 validate_definition
+
+Validates the machine's definition. Returns 1 if the definition is value. Otherwise it raises an exception.
+
+=head2 build_valid_line_regex
+
+Takes the machine's greatest digit, operand_width and instruction_width and returns a regex corresponding to a valid line in an input file to your machine.
+
+my $machine = {
+    meta => {
+        greatest => {
+            digit  => 9,
+        },
+    },
+    width => {
+        operand     => 2,
+        instruction => 3,
+    },
+};
+my $valid_line = build_valid_line_regex($machine); # qr/^[0-9]{2}\t[0-9]{3}$/
+
+my $machine = {
+    meta => {
+        greatest => {
+            digit  => 8,
+        },
+    },
+    width => {
+        operand     => 6,
+        instruction => 8,
+    },
+};
+my $valid_line = build_valid_line_regex($machine); # qr/^[0-7]{6}\t[0-7]{8}$/
+
+=head2 get_valid_input_regex
+
+my $machine = {
+    meta => {
+        greatest => {
+            digit => 1,
+        },
+    },
+    width => {
+        instruction => 16,
+    },
+};
+my $valid_input = get_valid_input_regex($machine); # qr/^[0-1]{16}$/
+
 =head1 AUTHOR
 
-William Stevenson <dreamer at coders dot coop>
+William Stevenson <william at coders dot coop>
 
 =head1 COPYRIGHT AND LICENSE
 

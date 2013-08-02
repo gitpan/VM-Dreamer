@@ -100,15 +100,20 @@ my %expected_machines = (
             width => {
                 op_code     =>  1,
                 operand     =>  2,
-                instruction =>  3
+                instruction =>  3,
             },
             greatest => {
                 digit       => 9,
-                op_code     => 9,
-                operand     => 99,
-                instruction => 999
-            }
-        }
+                op_code     => '9',
+                operand     => '99',
+                instruction => '999',
+                # digit is numeric, the others are strings
+                # this makes comparison easier for large
+                # numbers as they seem to be turned into
+                # scientific notation depending on the
+                # machine's architecture
+            },
+        },
     },
 
     gmc => {
@@ -132,15 +137,16 @@ my %expected_machines = (
             width => {
                 op_code     => 4,
                 operand     => 12,
-                instruction => 16
+                instruction => 16,
             },
             greatest => {
                 digit       => 1,
-                op_code     => 1111,
-                operand     => 111111111111,
-                instruction => 1111111111111111
+                op_code     => '1111',
+                operand     => '111111111111',
+                instruction => '1111111111111111',
+                # see comment above for grasshopper 
             },
-        }
+        },
     },
 
     rmc => {
@@ -164,16 +170,17 @@ my %expected_machines = (
             width => {
                 op_code     => 2,
                 operand     => 6,
-                instruction => 8
+                instruction => 8,
             },
             greatest => {
                 digit       => 7,
-                op_code     => 77,
-                operand     => 777777,
-                instruction => 77777777
-            }
-        }
-    }
+                op_code     => '77',
+                operand     => '777777',
+                instruction => '77777777',
+                # see comment above for grasshopper 
+            },
+        },
+    },
 );
 
 my %expected_memory = (

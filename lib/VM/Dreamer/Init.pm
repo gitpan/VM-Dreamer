@@ -3,6 +3,8 @@ package VM::Dreamer::Init;
 use strict;
 use warnings;
 
+our $VERSION = '0.087';
+
 require Exporter;
 
 our @ISA = qw(Exporter);
@@ -48,9 +50,11 @@ sub greatest_number {
 }
 
 sub total_width {
+    my @instruction_part_lengths = @_;
+
     my $total_width = 0;
- 
-    foreach my $width (@_) {
+
+    foreach my $width (@instruction_part_lengths) {
         unless( $width =~ /^0$/ || $width =~ /^[1-9]\d*$/ ) {
             die "The widths may only be zero or a positive interger";
         }
@@ -74,9 +78,46 @@ sub total_width {
 
 =pod
 
+=head1 NAME
+
+VM::Dreamer::Init - Functions to help with Initialization
+
+=head1 SYNOPSIS
+
+my $counter         = init_counter(8);         # [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+my $greatest_digit  = greatest_digit(8);       # 7
+my $greatest_number = greatest_number( 10, 4); # '9999'
+my $total_width     = total_width( 1, 2 );     # 3
+
+=head1 DESCRIPTION
+
+=head2 init_counter
+
+Takes a positive integer n and returns a reference to an an array of n elements, each of which is 0.
+
+In Dreamer, counters are machine parts like the counter and the accumulator.
+
+=head2 greatest_digit
+
+Takes a positive integer n and returns n - 1. Really only meant to be used for n from 2 to 10 inclusive, though no validation is performed here. The idea is that if the base is 8, the greatest digit would be 7.
+
+=head2 greatest_number
+
+Given a base and a width, returns a string of n digits, each of which is one less then the base.
+
+For example, if the base is 2 and the width is 9, the greatest_number would be 111111111.
+
+=head2 total_width
+
+Just adds up the elements in an array, but also performes validation checking to make sure that each element is zero or a positive integer.
+
+For example, if the op_code_width is 4 and the operand width is 12, the total_width would be 16. This is useful for figuring out how long an instruction is given the widths of its parts.
+
+As Dreamer only operates on one operand machines right now, this will really only be passed 2 elements in the array - the op_code_width and the operand_width. But, I decided to generalize it for use later.
+
 =head1 AUTHOR
 
-William Stevenson <dreamer at coders dot coop>
+William Stevenson <william at coders dot coop>
 
 =head1 COPYRIGHT AND LICENSE
 
