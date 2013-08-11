@@ -3,7 +3,7 @@ package VM::Dreamer::Validate;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 use VM::Dreamer::Environment qw( get_restrictions );
 use VM::Dreamer::Error qw( missing_term invalid_term );

@@ -3,7 +3,7 @@ package VM::Dreamer;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 use VM::Dreamer::Operation qw( add_one_to_counter get_new_machine );
 use VM::Dreamer::Util qw( parse_program_line parse_next_instruction );
@@ -112,7 +112,7 @@ Dreamer - An arbitrary emulator of one-operand computers
 
 =head1 VERSION
 
-Version 0.087
+Version 0.851
 
 =head1 SYNOPSIS
 

@@ -3,7 +3,7 @@ package VM::Dreamer::Error;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 use VM::Dreamer::Environment qw( get_restrictions get_say_normal );
 

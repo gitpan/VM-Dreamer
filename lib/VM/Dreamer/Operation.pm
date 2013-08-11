@@ -3,7 +3,7 @@ package VM::Dreamer::Operation;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 use VM::Dreamer::Init qw( total_width greatest_digit greatest_number init_counter );
 

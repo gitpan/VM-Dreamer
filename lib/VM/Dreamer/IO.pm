@@ -3,7 +3,7 @@ package VM::Dreamer::IO;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 use VM::Dreamer::Validate qw{ get_valid_input_regex };
 

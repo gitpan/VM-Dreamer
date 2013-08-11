@@ -3,7 +3,7 @@ package VM::Dreamer::Instructions;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 use VM::Dreamer::IO qw( get_valid_input_from_user add_input_to_inbox shift_inbox_to_memory add_to_outbox shift_outbox_to_user );
 use VM::Dreamer::Util qw( arrayify_string stringify_array add_two_arrays subtract_two_arrays );

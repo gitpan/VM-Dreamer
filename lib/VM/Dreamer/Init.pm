@@ -3,7 +3,7 @@ package VM::Dreamer::Init;
 use strict;
 use warnings;
 
-our $VERSION = '0.087';
+our $VERSION = '0.851';
 
 require Exporter;
 
